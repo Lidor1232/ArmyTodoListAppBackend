@@ -21,4 +21,5 @@ export interface CreateTask {
 export interface UpdateTask {
   title?: string;
   description?: string;
+  status?: TaskStatus;
 }
