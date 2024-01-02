@@ -18,6 +18,7 @@ const TaskSchema = new Schema(
       type: String,
       enum: TaskStatus,
       required: true,
+      default: TaskStatus.Created,
     },
   },
   {
