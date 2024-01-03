@@ -2,6 +2,7 @@ import {Application} from 'express';
 import {
   createTask,
   deleteTask,
+  getTask,
   getTasks,
   updateTask,
 } from '../controllers/task/task.controller';
@@ -27,4 +28,6 @@ export default function (app: Application) {
   );
 
   app.delete('/task/:taskId/delete', deleteTask);
+
+  app.get('/task/:taskId/details', getTask);
 }

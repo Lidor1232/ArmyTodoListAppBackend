@@ -100,3 +100,22 @@ export async function deleteTask(
     return next(error);
   }
 }
+
+export async function getTask(
+  req: Request<{taskId: string}>,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const task = await TaskService.onGetDocByIdOrThrow({
+      taskId: req.params.taskId,
+    });
+    return res.status(200).json(
+      new TaskApiResponse({
+        task,
+      }),
+    );
+  } catch (error) {
+    return next(error);
+  }
+}
