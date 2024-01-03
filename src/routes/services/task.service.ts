@@ -1,4 +1,4 @@
-import {CreateTask, Task, UpdateTask} from '../dto/task.dto';
+import {CreateTask, Task, TaskStatus, UpdateTask} from '../dto/task.dto';
 import logger from '../../config/logger';
 import TaskModel from '../../models/task.model';
 import {PaginationRequestQuery} from '../../utills/api/pagination/pagination';
@@ -24,8 +24,12 @@ export async function onCreateDoc({task}: {task: CreateTask}): Promise<Task> {
 
 export async function onGetDocs({
   paginationParams,
+  queries,
 }: {
   paginationParams: PaginationRequestQuery;
+  queries: {
+    status?: TaskStatus;
+  };
 }): Promise<Task[]> {
   logger.debug(
     {
@@ -33,7 +37,7 @@ export async function onGetDocs({
     },
     'Getting tasks',
   );
-  const tasks = await TaskModel.find({})
+  const tasks = await TaskModel.find(queries)
     .skip(paginationParams.skip)
     .limit(paginationParams.limit);
   logger.info(

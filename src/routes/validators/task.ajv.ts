@@ -1,5 +1,5 @@
 import {JSONSchemaType} from 'ajv';
-import {CreateTask, TaskStatus, UpdateTask} from '../dto/task.dto';
+import {CreateTask, GetTasks, TaskStatus, UpdateTask} from '../dto/task.dto';
 
 export const createTaskDtoSchemaValidator: JSONSchemaType<CreateTask> = {
   type: 'object',
@@ -33,5 +33,25 @@ export const updateTaskDtoSchemaValidator: JSONSchemaType<UpdateTask> = {
     },
   },
   required: [],
+  additionalProperties: false,
+};
+
+export const getTasksDtoSchemaValidator: JSONSchemaType<GetTasks> = {
+  type: 'object',
+  properties: {
+    terms: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'string',
+          enum: [TaskStatus.Created, TaskStatus.Deleted, TaskStatus.Completed],
+          nullable: true,
+        },
+      },
+      additionalProperties: false,
+      required: [],
+    },
+  },
+  required: ['terms'],
   additionalProperties: false,
 };

@@ -9,11 +9,12 @@ import {
 import jsonSchemaValidator from '../middlewares/validation.middleware';
 import {
   createTaskDtoSchemaValidator,
+  getTasksDtoSchemaValidator,
   updateTaskDtoSchemaValidator,
 } from '../validators/task.ajv';
 
 export default function (app: Application) {
-  app.get('/tasks', getTasks);
+  app.post('/tasks', jsonSchemaValidator(getTasksDtoSchemaValidator), getTasks);
 
   app.post(
     '/task/create',

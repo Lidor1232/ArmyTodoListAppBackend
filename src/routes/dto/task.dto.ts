@@ -23,3 +23,9 @@ export interface UpdateTask {
   description?: string;
   status?: TaskStatus;
 }
+
+export interface GetTasks {
+  terms: {
+    status?: TaskStatus;
+  };
+}

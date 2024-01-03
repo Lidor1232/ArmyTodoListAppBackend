@@ -2,14 +2,14 @@ import {NextFunction, Request, Response} from 'express';
 import {onGetPaginationParams} from '../../../utills/api/pagination/pagination';
 import * as TaskService from '../../services/task.service';
 import {GetTasksApiResponse} from './responses/get-tasks-api-response';
-import {CreateTask, TaskStatus, UpdateTask} from '../../dto/task.dto';
+import {CreateTask, GetTasks, TaskStatus, UpdateTask} from '../../dto/task.dto';
 import {TaskApiResponse} from './responses/task-api-response';
 
 export async function getTasks(
   req: Request<
     unknown,
     unknown,
-    unknown,
+    GetTasks,
     {
       page?: number;
       limit?: number;
@@ -25,6 +25,7 @@ export async function getTasks(
     });
     const tasks = await TaskService.onGetDocs({
       paginationParams,
+      queries: req.body.terms,
     });
     return res.status(200).json(
       new GetTasksApiResponse({
